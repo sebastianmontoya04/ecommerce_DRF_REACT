@@ -5,6 +5,8 @@ import { Store } from '../pages/Store';
 import { Login } from '../pages/Login';
 import { Cart } from '../pages/Cart';
 import { Register } from '../pages/Register';
+import { Dashboard } from '../pages/Dashboard';
+import { ProtectedRoute } from '../components/ProtectedRoute';
 
 
 export const AppRouter = () => {
@@ -21,16 +23,28 @@ export const AppRouter = () => {
                 </MainLayout>
             } />
 
+            {/* Rutas Privadas  */}
             <Route path='/store' element={
-                <MainLayout>
-                    <Store />
-                </MainLayout>
+                <ProtectedRoute>
+                    <MainLayout>
+                        <Store />
+                    </MainLayout>
+                </ProtectedRoute>
             } />
 
             <Route path='/cart' element={
-                <MainLayout>
-                    <Cart />
-                </MainLayout>
+                <ProtectedRoute>
+                    <MainLayout>
+                        <Cart />
+                    </MainLayout>
+                </ProtectedRoute>
+            } />
+            <Route path='/dashboard' element={
+                <ProtectedRoute>
+                    <MainLayout>
+                        <Dashboard />
+                    </MainLayout>
+                </ProtectedRoute>
             } />
         </Routes>
     );
