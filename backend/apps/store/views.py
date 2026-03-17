@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import Cart, CartItem
-from .serializers import CartItemSerializer
+from .models import Cart, CartItem, Product
+from .serializers import CartItemSerializer, ProductSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
@@ -31,3 +31,9 @@ class CartItemViewSet(viewsets.ModelViewSet):
         
         # Respondemos con un 204 (No Content) porque el carrito quedó vacío
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+#Este ViewSet es ReadOnly porque los clientes no crean productos, solo los ven.
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.AllowAny]
