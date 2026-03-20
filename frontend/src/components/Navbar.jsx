@@ -12,12 +12,12 @@ export const Navbar = () => {
       </Link>
 
       <div className="space-x-8 font-medium text-gray-600 flex items-center">
-        <Link to="/tienda" className="hover:text-indigo-600 transition-colors">Tienda</Link>
+        <Link to="/store" className="hover:text-indigo-600 transition-colors">Tienda</Link>
         
         {user ? (
           <>
-            <Link to="/cart" className="hover:text-indigo-600">Carrito</Link>
-            <Link to="/dashboard" className="hover:text-indigo-600">Mi Perfil</Link>
+            <Link to="/cart" className="hover:text-indigo-600">Mi Carrito</Link>
+            <Link to="/userProfile" className="hover:text-indigo-600">Mi Perfil</Link>
             <button 
               onClick={logout}
               className="bg-red-50 text-red-600 px-4 py-2 rounded-xl hover:bg-red-100 transition-all font-bold"

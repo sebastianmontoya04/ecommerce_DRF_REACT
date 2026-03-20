@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoadingScreen } from '../components/LoadingScreen';
-import api from '../api/api';
+import { api } from '../api/api';
 
 export const AuthContext = createContext();
 
@@ -51,25 +51,48 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error("Error en login:", error);
             // Extraemos el mensaje de error si el backend lo envía, sino uno genérico
-            const errorMsg = error.response?.data?.detail || "Credenciales inválidas";
+            const errorMsg = error.response?.data?.detail || "Verifica tus credenciales";
             return { success: false, error: errorMsg };
         }
     };
+
+    const register = async (username, password, email) => {
+        try {
+            await api.post('accounts/register/', { username, password, email })
+            navigate('/login')
+            return { success: true }
+        } catch (error) {
+            console.log('error en el registro', error)
+            const errorMsg = error.response?.data?.detail
+            return { success: false, error: errorMsg }
+        }
+    }
 
     const logout = () => {
         // Limpiamos tokens y estado del usuario
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         setUser(null);
-        navigate('/login');
+        navigate('/home');
     };
 
+    const updateProfile = async (formData) => {
+        try {
+            await api.put('accounts/updateProfile/', formData)
+            return { success: true }
+        } catch (error) {
+            console.log('Error al actualicar', error)
+            const errMsg = error.response?.data?.detail
+            return { success: false, error: errMsg }
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, register, logout, loading, updateProfile }}>
             {/* Solo renderizamos la app cuando loading sea false */}
-            {!loading 
-            ? LoadingScreen 
-            : children}
+            {loading
+                ? <LoadingScreen />
+                : children}
         </AuthContext.Provider>
     );
 };

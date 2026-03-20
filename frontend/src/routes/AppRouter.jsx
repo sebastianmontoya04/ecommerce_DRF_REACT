@@ -7,6 +7,7 @@ import { Cart } from '../pages/Cart';
 import { Register } from '../pages/Register';
 import { Dashboard } from '../pages/Dashboard';
 import { ProtectedRoute } from '../components/ProtectedRoute';
+import { UserProfile } from '../pages/UserProfile';
 
 
 export const AppRouter = () => {
@@ -43,6 +44,13 @@ export const AppRouter = () => {
                 <ProtectedRoute>
                     <MainLayout>
                         <Dashboard />
+                    </MainLayout>
+                </ProtectedRoute>
+            } />
+            <Route path='/userProfile' element={
+                <ProtectedRoute>
+                    <MainLayout>
+                        <UserProfile />
                     </MainLayout>
                 </ProtectedRoute>
             } />

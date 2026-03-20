@@ -1,10 +1,31 @@
+import { AuthContext } from "../context/AuthContext";
+import toast, { Toaster } from 'react-hot-toast'
+import { useContext, useState } from "react";
 
 export const Login = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { login } = useContext(AuthContext)
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    const result = await login(username.trim(), password)
+    if (result.success) {
+      toast.success('Sesion iniciada correctamente!')
+      return;
+    }
+    toast.error("Error al iniciar sesion, verifica tus credenciales")
+    setLoading(false)
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <Toaster />
       <div className="w-full max-w-sm bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100">
-        
+
         {/* Header del formulario */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-black text-gray-900 tracking-tight">Bienvenido</h2>
@@ -12,27 +33,34 @@ export const Login = () => {
         </div>
 
         {/* Inputs con estilo moderno */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleLogin}>
           <div>
             <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Usuario</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
               placeholder="Tu usuario"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Contraseña</label>
-            <input 
-              type="password" 
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
-              placeholder="••••••••"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
 
-          <button className="w-full py-3 mt-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-black transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-gray-300">
-            Iniciar Sesión
+          <div>
+            <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Contraseña</label>
+            <input
+              type="password"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button className="w-full py-3 mt-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-black transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-gray-300"
+            disabled={loading}>
+            {loading ? "verificando..." : "iniciar sesion"}
           </button>
         </form>
 
