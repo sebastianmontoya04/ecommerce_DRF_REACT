@@ -13,12 +13,23 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(
             username=validate_data['username'],
             password=validate_data['password'],
-            email=validate_data.get('email'),
-            first_name=validate_data.get('first_name'),
-            last_name=validate_data.get('last_name'),
+            email=validate_data.get('email', ''),
+            first_name=validate_data.get('first_name', ''),
+            last_name=validate_data.get('last_name', ''),
         )
         return user
     
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        
+        
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+        return instance
 
     
         

@@ -1,11 +1,12 @@
-from .serializers import RegisterSerializer
-from rest_framework import status
+from .serializers import RegisterSerializer, UpdateProfileSerializer
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class RegisterView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         
@@ -26,3 +27,11 @@ def get_user_profile(request):
         'email': user.email,
         'first_name': user.first_name
     })
+    
+    
+class UpdateProfileView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UpdateProfileSerializer
+    
+    def get_object(self):
+        return self.request.user
