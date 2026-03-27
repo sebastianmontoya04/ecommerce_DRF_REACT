@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { CartContext } from "../context/CartContext";
 
 export const Dashboard = () => {
   const { user } = useContext(AuthContext)
+  const { cartItems } = useContext(CartContext)
   return (
     <div className="max-w-6xl mx-auto animate-fadeIn">
       {/* Header de Bienvenida */}
@@ -16,7 +18,7 @@ export const Dashboard = () => {
         {/* Card: Pedidos Recientes */}
         <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
           <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4 text-indigo-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+            <img src="src/assets/circle-dollar-sign.svg" alt="" />
           </div>
           <h3 className="text-xl font-bold text-gray-900">Mis Pedidos</h3>
           <p className="text-gray-500 text-sm mt-1">Has realizado 5 compras este mes.</p>
@@ -25,16 +27,16 @@ export const Dashboard = () => {
         {/* Card: Items en Carrito */}
         <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
           <div className="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-4 text-green-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+            <img src="src/assets/shopping-cart.svg" alt="" />
           </div>
           <h3 className="text-xl font-bold text-gray-900">Carrito Actual</h3>
-          <p className="text-gray-500 text-sm mt-1">Tienes 2 accesorios listos para pago.</p>
+          <p className="text-gray-500 text-sm mt-1">Tienes {cartItems?.length} accesorios listos para pago.</p>
         </div>
 
         {/* Card: Seguridad */}
         <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
           <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center mb-4 text-orange-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+            <img src="src/assets/lock-keyhole.svg" alt="" />
           </div>
           <h3 className="text-xl font-bold text-gray-900">Seguridad</h3>
           <p className="text-gray-500 text-sm mt-1">Tu cuenta está protegida.</p>

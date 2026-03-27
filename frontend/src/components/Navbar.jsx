@@ -12,6 +12,7 @@ export const Navbar = () => {
       </Link>
 
       <div className="space-x-8 font-medium text-gray-600 flex items-center">
+        <Link to="/dashboard" className="hover:text-indigo-600 transition-colors">Inicio</Link>
         <Link to="/store" className="hover:text-indigo-600 transition-colors">Tienda</Link>
         
         {user ? (

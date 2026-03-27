@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
             await api.put('accounts/updateProfile/', formData)
             return { success: true }
         } catch (error) {
-            console.log('Error al actualicar', error)
+            console.log('Error al actualizar', error)
             const errMsg = error.response?.data?.detail
             return { success: false, error: errMsg }
         }
