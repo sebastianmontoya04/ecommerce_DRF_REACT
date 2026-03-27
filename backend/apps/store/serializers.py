@@ -4,7 +4,7 @@ from .models import CartItem, Product
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price']
+        fields = ['id', 'name', 'price', 'description', 'image', 'stock']
 
 class CartItemSerializer(serializers.ModelSerializer):
     #product trae lo que tiene Product(id, name, price)

@@ -4,6 +4,8 @@ from rest_framework_simplejwt.views import (
 from django.contrib import admin
 from django.urls import path, include
 from apps.accounts.views import get_user_profile
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -20,6 +22,4 @@ urlpatterns = [
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     
     path('api/get_profile/', get_user_profile ),
-    
-    
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

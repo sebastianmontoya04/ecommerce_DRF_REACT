@@ -7,7 +7,6 @@ from rest_framework.decorators import action
 
 class CartItemViewSet(viewsets.ModelViewSet):
     serializer_class = CartItemSerializer
-    #nos aseguramos que el usuario este logueado(tenga un token)
     permission_classes = [permissions.IsAuthenticated]
     
     #buscamos todos los productos que hay en el carrito de el usuario 
@@ -33,7 +32,7 @@ class CartItemViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 #Este ViewSet es ReadOnly porque los clientes no crean productos, solo los ven.
-class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [permissions.AllowAny]
